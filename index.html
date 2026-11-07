@@ -556,6 +556,12 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
   .hero-bk blockquote{font-size:16px}
   .hero-bk .buy .btn{flex:1; justify-content:center}
 }
+.pr .old{display:block; font-size:11.5px; font-weight:500; color:var(--muted); text-decoration:line-through; margin-bottom:2px}
+.pr .off{display:inline-block; margin-left:6px; background:var(--gold); color:#241038; font-size:10.5px; font-weight:800;
+  padding:2px 6px; border-radius:6px; vertical-align:1px}
+.hero-bk .price .was{font-size:17px; font-weight:500; opacity:.6; margin-right:4px}
+.disc-note{display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:#241038;
+  font:700 13px/1.2 Manrope,sans-serif; padding:8px 14px; border-radius:999px; margin-top:16px}
 /* muqova rasmi zaxira matn ustida turadi */
 .ph img{position:relative; z-index:1}
 </style>
@@ -602,7 +608,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
             chunki sen ajralib turish uchun yaralgansan.</blockquote>
           <div class="facts"><span>📚 17 mln nusxa sotilgan</span><span>🌍 57 tilga tarjima qilingan</span></div>
           <div class="buy">
-            <div class="price"><small>Ulgurji narx</small>60 000 so'm</div>
+            <div class="price" id="heroPrice"><small>Do'kon narxi · −5%</small><s class="was">60 000</s> 57 000 so'm</div>
             <button class="btn btn-gold" onclick="openOrder('sn9')">Buyurtma berish →</button>
             <a class="btn btn-ghost" href="#ulgurji">Ulgurji shartlar</a>
           </div>
@@ -611,6 +617,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
       <h1 class="cat-h1">Siz kitob do'konimisiz?</h1>
       <p class="sub">Sabo Nashr kitoblarini o'z do'koningizda sotmoqchimisiz? Kitoblarni tanlang,
          sonini belgilang va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz.</p>
+      <div class="disc-note">🏷 Do'konlar uchun barcha kitoblarga avtomatik −5% chegirma</div>
       <div class="books" id="bookGrid"></div>
       <div style="margin-top:34px">
         <button class="btn btn-primary" onclick="openOrder()">Buyurtma berish →</button>
@@ -757,7 +764,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
           <span class="bn-pill"><b id="bnN">17</b> ta kitob</span>
           <h2>Siz kitob do'konimisiz?</h2>
           <p>Sabo Nashr kitoblarini o'z do'koningizda soting: kitoblarni tanlang, sonini belgilang
-             va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz.</p>
+             va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz. <b>Barcha kitoblarga −5% chegirma.</b></p>
         </div>
       </div>
       <input class="search" id="q" placeholder="Kitob nomi yoki mavzu bo'yicha qidirish...">
@@ -768,7 +775,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
       <div class="trust">
         <div><span class="i">✓</span><span><b>Original nashr</b><small>To'g'ridan-to'g'ri nashriyotdan</small></span></div>
         <div><span class="i">🚚</span><span><b>Yetkazib beramiz</b><small>O'zbekiston bo'ylab do'koningizgacha</small></span></div>
-        <div><span class="i">🏷</span><span><b>Ulgurji narx</b><small>Har bir kitob ostida ko'rsatilgan</small></span></div>
+        <div><span class="i">🏷</span><span><b>−5% chegirma</b><small>Do'konlar uchun avtomatik hisoblanadi</small></span></div>
         <div><span class="i">☎</span><span><b>Menejer tasdiqlaydi</b><small>Yuborishdan oldin qo'ng'iroq qilamiz</small></span></div>
       </div>
 
@@ -833,6 +840,8 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
       <div class="rev">
         <h3>Buyurtma</h3>
         <div id="revBooks"></div>
+        <div class="ln" style="margin-top:10px"><span>Chegirmasiz narx</span><span id="rBase">—</span></div>
+        <div class="ln"><span>Do'kon chegirmasi (<span class="dpct">5</span>%)</span><span id="rDisc" style="color:var(--green);font-weight:700">—</span></div>
         <div class="tot"><span>Jami</span><span class="g" id="grand">0 so'm</span></div>
       </div>
       <div class="rev">
@@ -919,6 +928,10 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
 <script>
 /* ============ MA'LUMOTLAR ============ */
 var ORDER_ENDPOINT = "/api/order";   /* Vercel serverless funksiyasi */
+
+/* ============ DO'KONLAR UCHUN CHEGIRMA ============
+   Saytdagi narxlardan avtomatik chegirma (foizda). api/order.js dagi DISCOUNT bilan bir xil bo'lsin. */
+var DISCOUNT = 5;
 
 var BOOKS = [
  {id:"sn9", t:"Mo'jiza", a:"", c:"Badiiy", m:"Badiiy", p:60000, img:"sn9.jpg", hot:"Bestseller",
@@ -1105,7 +1118,7 @@ document.getElementById("bookGrid").innerHTML = BOOKS.map(function(b){
   return '<div class="bk'+(b.hot?' is-hot':'')+'" data-id="'+b.id+'" role="button" tabindex="0">'+cover(b)+
          '<div class="in"><b>'+b.t+'</b>'+
          (b.a?'<div class="ar">'+b.a+'</div>':'')+'<div class="mt">'+b.m+'</div>'+
-         '<div class="pr">'+money(b.p)+'</div>'+
+         '<div class="pr">'+priceHtml(b.p)+'</div>'+
          '<span class="more" data-more="g'+b.id+'" role="button" tabindex="0">Batafsil <i>▾</i></span>'+
          '<div class="desc" id="d-g'+b.id+'"><em>'+b.au+'</em>'+b.d+'</div>'+
          '<button class="add" type="button">Tanlash →</button></div></div>';
@@ -1122,6 +1135,9 @@ document.getElementById("bookGrid").addEventListener("keydown", function(e){
 });
 
 document.getElementById("yr").textContent = new Date().getFullYear();
+[].forEach.call(document.querySelectorAll(".dpct"), function(e){ e.textContent = DISCOUNT; });
+(function(){ var h = document.getElementById("heroPrice"), m = byId("sn9"); if(!h || !m) return;
+  h.innerHTML = "<small>Do'kon narxi · −"+DISCOUNT+"%</small><s class=\"was\">"+money(m.p).replace(" so'm","")+"</s> "+money(dp(m.p)); })();
 
 /* ---- banner: 17 ta muqovadan uzun lenta ---- */
 (function(){
@@ -1197,7 +1213,7 @@ function renderPick(){
   document.getElementById("pick").innerHTML = list.map(function(b){
     return '<div class="pk'+(sel[b.id]?' on':'')+'" data-id="'+b.id+'" role="button" tabindex="0">'+
       cover(b)+'<div class="mark">✓</div><div class="in"><b>'+b.t+'</b>'+
-      '<div class="mt">'+b.m+'</div><div class="pr">'+money(b.p)+'</div>'+
+      '<div class="mt">'+b.m+'</div><div class="pr">'+priceHtml(b.p)+'</div>'+
       '<span class="more" data-more="'+b.id+'" role="button" tabindex="0">Batafsil <i>▾</i></span>'+
       '<div class="desc" id="d-'+b.id+'"><em>'+b.au+'</em>'+b.d+'</div>'+
       '<div class="act">'+actHtml(b)+'</div>'+
@@ -1212,7 +1228,7 @@ function actHtml(b){
   return '<div class="ps"><button type="button" data-q="-1" aria-label="Kamaytirish">−</button>'+
          '<input type="number" inputmode="numeric" min="1" max="'+QMAX+'" value="'+n+'" aria-label="Soni">'+
          '<button type="button" data-q="1" aria-label="Ko\'paytirish">+</button></div>'+
-         '<div class="sub">Jami: <b>'+money(b.p*n)+'</b></div>';
+         '<div class="sub">Jami: <b>'+money(dp(b.p)*n)+'</b></div>';
 }
 function refreshCard(id){
   var el = document.querySelector('.pk[data-id="'+id+'"]'); if(!el) return;
@@ -1248,7 +1264,7 @@ document.getElementById("pick").addEventListener("input", function(e){
   var el = e.target.closest(".pk"), id = el.dataset.id, v = parseInt(e.target.value,10);
   if(v >= 1){ sel[id] = Math.min(QMAX, v);
     if(v > QMAX) e.target.value = QMAX;
-    el.querySelector(".sub b").textContent = money(byId(id).p*sel[id]); bar(); }
+    el.querySelector(".sub b").textContent = money(dp(byId(id).p)*sel[id]); bar(); }
 });
 document.getElementById("pick").addEventListener("change", function(e){
   if(e.target.tagName !== "INPUT") return;
@@ -1258,7 +1274,12 @@ document.getElementById("pick").addEventListener("change", function(e){
 
 function byId(id){ return BOOKS.filter(function(b){return b.id===id})[0]; }
 function chosen(){ return Object.keys(sel).map(function(id){ return {b:byId(id), n:sel[id]}; }); }
-function total(){ return chosen().reduce(function(s,x){ return s + x.b.p*x.n; },0); }
+function dp(p){ return Math.round(p * (100 - DISCOUNT) / 100); }          /* chegirmali narx */
+function base(){ return chosen().reduce(function(s,x){ return s + x.b.p*x.n; },0); }
+function total(){ return chosen().reduce(function(s,x){ return s + dp(x.b.p)*x.n; },0); }
+function priceHtml(p){
+  return '<span class="old">'+money(p)+'</span>'+money(dp(p))+'<span class="off">−'+DISCOUNT+'%</span>';
+}
 
 /* ---- 2-bosqich: soni ---- */
 function renderQty(){
@@ -1380,8 +1401,10 @@ function payMode(){
 
 function renderReview(){
   document.getElementById("revBooks").innerHTML = chosen().map(function(x){
-    return '<div class="ln"><span>'+x.b.t+' × '+x.n+'</span><span>'+money(x.b.p*x.n)+'</span></div>';
+    return '<div class="ln"><span>'+x.b.t+' × '+x.n+'</span><span>'+money(dp(x.b.p)*x.n)+'</span></div>';
   }).join("");
+  document.getElementById("rBase").textContent = money(base());
+  document.getElementById("rDisc").textContent = "−" + money(base() - total());
   document.getElementById("grand").textContent = money(total());
   document.getElementById("payAmount").textContent = money(total());
   document.getElementById("rNm").textContent = document.getElementById("nm").value || "—";
