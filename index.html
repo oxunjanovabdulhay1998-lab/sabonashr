@@ -628,6 +628,15 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
   box-shadow:0 6px 16px rgba(91,46,140,.28)}
 .dl input:focus-visible + span{outline:2px solid var(--green); outline-offset:2px}
 @media(max-width:520px){ .dlv{grid-template-columns:repeat(2,1fr)} }
+/* buyurtma oynasida: Mo'jiza katta, sarlavha oddiy matn */
+.hero-bk.in-order{margin:0 0 30px}
+#order .banner{background:none; min-height:0; display:block; margin:0 0 14px}
+#order .banner .bn-bg, #order .banner .bn-veil, #order .banner .bn-strip{display:none}
+#order .banner .bn-txt{padding:0; max-width:none; color:var(--ink); text-shadow:none}
+#order .banner h2{color:var(--ink); font-size:clamp(26px,3.6vw,36px); margin:0 0 8px}
+#order .banner p{display:block; color:var(--muted)}
+#order .banner p b{color:var(--green)}
+#order .bn-pill{background:var(--green-soft); color:var(--green)}
 /* muqova rasmi zaxira matn ustida turadi */
 .ph img{position:relative; z-index:1}
 </style>
@@ -1614,6 +1623,19 @@ document.addEventListener("keydown", function(e){
 });
 
 renderPick();
+
+/* Mo'jiza katta bo'limi buyurtma oynasining boshida ham turadi
+   (sayt shu oyna bilan ochilgani uchun mijoz uni birinchi ko'radi) */
+(function(){
+  var src = document.getElementById("mojiza"); if(!src) return;
+  var h = src.cloneNode(true);
+  h.id = "mojizaTop"; h.classList.add("in-order");
+  var g = h.querySelector('a.btn-ghost');
+  if(g){ g.href = "https://t.me/Kitobdor_ulgurji"; g.target = "_blank"; g.rel = "noopener noreferrer";
+         g.textContent = "✈ Telegramda yozish"; }
+  var st = document.querySelector('.step[data-s="1"]');
+  st.insertBefore(h, st.firstChild);
+})();
 
 /* Saytga kirgan zahoti kitob tanlash oynasi ochiladi */
 (function(){
