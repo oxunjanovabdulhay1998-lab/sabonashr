@@ -907,8 +907,8 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 
     <!-- STEP 4 — TASDIQLASH -->
     <section class="step" data-s="4">
-      <h2>Buyurtmani tasdiqlang</h2>
-      <p class="hint">Ma'lumotlarni tekshirib chiqing.</p>
+      <h2>Ma'lumotlarni tekshiring</h2>
+      <p class="hint">Hammasi to'g'ri bo'lsa, pastdagi «Buyurtma berish» tugmasini bosing.</p>
       <div class="err" id="err"></div>
       <div class="rev">
         <h3>Buyurtma</h3>
@@ -925,7 +925,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
         <div class="ln"><span>Yetkazib berish</span><span id="rBr">—</span></div>
         <div class="ln" id="rNtRow" style="display:none"><span>Izoh</span><span id="rNt">—</span></div>
       </div>
-      <div class="pay">
+      <div class="pay" hidden style="display:none"><!-- to'lov bo'limi o'chirilgan -->
         <h3>To'lov</h3>
         <label class="pop"><input type="radio" name="pay" value="keyin" checked>
           <span><b>Menejer bilan kelishib to'layman</b>
@@ -1042,7 +1042,7 @@ var BOOKS = [
 var REGIONS = ["Toshkent shahri","Toshkent viloyati","Andijon","Buxoro","Farg'ona","Jizzax","Xorazm",
  "Namangan","Navoiy","Qashqadaryo","Qoraqalpog'iston Respublikasi","Samarqand","Sirdaryo","Surxondaryo"];
 
-var STEPS = ["Kitob va soni","Ma'lumotlar","Tasdiqlash"];
+var STEPS = ["Kitob va soni","Ma'lumotlar","Tekshirish"];
 var FLOW = [1,3,4];   /* 2-bosqich (alohida son) olib tashlandi */
 var FALLBACK = "";
 
@@ -1510,7 +1510,7 @@ function go(n){
   document.getElementById("oft").style.display = (n===5 ? "none" : "block");
   if(n<5) drawProg(); else document.getElementById("prog").innerHTML = "";
   document.getElementById("back").style.visibility = (n===1 ? "hidden" : "visible");
-  document.getElementById("next").textContent = (n===4 ? "Buyurtmani tasdiqlash ✓" : "Davom etish →");
+  document.getElementById("next").textContent = (n===4 ? "Buyurtma berish ✓" : "Davom etish →");
   window.scrollTo({top:0,behavior:"smooth"});
   bar();
 }
@@ -1575,7 +1575,7 @@ function submitOrder(){
   }).catch(function(){
     err.textContent = "Buyurtmani yuborishda xatolik. Iltimos qayta urinib ko'ring yoki +998 95 668 04 07 raqamiga qo'ng'iroq qiling.";
     err.classList.add("on");
-    btn.disabled = false; btn.textContent = "Buyurtmani tasdiqlash ✓";
+    btn.disabled = false; btn.textContent = "Buyurtma berish ✓";
   });
 }
 
