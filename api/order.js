@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
     let total = 0;
     const lines = items.map(i => {
-      const qty = Math.max(1, Math.min(99, parseInt(i.qty, 10) || 1));
+      const qty = Math.max(1, Math.min(9999, parseInt(i.qty, 10) || 1));
       const price = parseInt(i.price, 10) || 0;
       total += qty * price;
       return `• ${esc(i.title)} × ${qty} — ${money(qty * price)}`;
