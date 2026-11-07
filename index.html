@@ -107,7 +107,7 @@ h1 em{font-style:normal; color:var(--green)}
 .bk{background:var(--card); border-radius:16px; overflow:hidden; box-shadow:0 4px 14px rgba(36,16,56,.07);
   display:flex; flex-direction:column; transition:.18s}
 .bk:hover{transform:translateY(-3px); box-shadow:0 12px 26px rgba(20,32,27,.1)}
-.bk .ph{aspect-ratio:3/4; background:#EDE4F6; position:relative; overflow:hidden}
+.bk .ph{aspect-ratio:7/10; background:#EDE4F6; position:relative; overflow:hidden}
 .bk .ph img{width:100%; height:100%; object-fit:cover}
 .bk .ph .fb{position:absolute; inset:0; display:grid; place-items:center; text-align:center;
   font-family:"Playfair Display",serif; font-size:17px; color:#7A6A93; padding:10px}
@@ -199,7 +199,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
   cursor:pointer; position:relative; text-align:left; padding:0; transition:.15s}
 .pk:hover{transform:translateY(-2px)}
 .pk.on{border-color:var(--green)}
-.pk .ph{aspect-ratio:3/4; background:#EDE4F6; position:relative; overflow:hidden}
+.pk .ph{aspect-ratio:7/10; background:#EDE4F6; position:relative; overflow:hidden}
 .pk .ph img{width:100%;height:100%;object-fit:cover}
 .pk .ph .fb{position:absolute; inset:0; display:grid; place-items:center; text-align:center;
   font-family:"Playfair Display",serif; font-size:16px; color:#7A6A93; padding:8px}
@@ -502,6 +502,8 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
   .wsale-btns{width:100%}
   .wsale-btns .btn{flex:1; justify-content:center; font-size:14px; padding:12px 14px}
 }
+/* muqova rasmi zaxira matn ustida turadi */
+.ph img{position:relative; z-index:1}
 </style>
 </head>
 <body>
@@ -845,37 +847,41 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
 var ORDER_ENDPOINT = "/api/order";   /* Vercel serverless funksiyasi */
 
 var BOOKS = [
- {id:"sn1", t:"Qur'onim — quvonchim", a:"", c:"Ma'naviyat", m:"Ma'naviyat \u00b7 000 bet", p:50000, img:"sn1.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi. Haqiqiy matn berilgach almashtiriladi."},
+ {id:"sn1", t:"Rasulullohni tanidim", a:"", c:"Siyrat", m:"Siyrat", p:32000, img:"sn1.jpg",
+  au:"",
+  d:"Rasulullohni ﷺ chindan taniysizmi?!"},
 
- {id:"sn2", t:"Qaddingni ko'tar", a:"", c:"Ma'naviyat", m:"Ma'naviyat \u00b7 000 bet", p:50000, img:"sn2.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi. Haqiqiy matn berilgach almashtiriladi."},
+ {id:"sn2", t:"Qaddingni ko'tar", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:45000, img:"sn2.jpg",
+  au:"Xolid Munif",
+  d:""},
 
- {id:"sn3", t:"Namuna kitob 3", a:"", c:"Tarbiya", m:"Tarbiya \u00b7 000 bet", p:50000, img:"sn3.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."},
+ {id:"sn3", t:"Hayot saboqlari", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:30000, img:"sn3.jpg",
+  au:"Xolid Munif",
+  d:"«Inson mehr ulashgan sari uning bir zarrasi ham kamaymaydi»"},
 
- {id:"sn4", t:"Namuna kitob 4", a:"", c:"Tarbiya", m:"Tarbiya \u00b7 000 bet", p:50000, img:"sn4.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."},
+ {id:"sn4", t:"Qur'onim — quvonchim", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn4.jpg",
+  au:"Abdulloh Hammod Balviy",
+  d:""},
 
- {id:"sn5", t:"Namuna kitob 5", a:"", c:"Bolalar", m:"Bolalar \u00b7 000 bet", p:50000, img:"sn5.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."},
+ {id:"sn5", t:"Bu mening Robbim", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn5.jpg",
+  au:"Doktor Fotima Antar",
+  d:"Allohni chindan taniysizmi?!"},
 
- {id:"sn6", t:"Namuna kitob 6", a:"", c:"Bolalar", m:"Bolalar \u00b7 000 bet", p:50000, img:"sn6.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."},
+ {id:"sn6", t:"Solihlar davrasida", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn6.jpg",
+  au:"Usmon Shavkatulloh",
+  d:""},
 
- {id:"sn7", t:"Namuna kitob 7", a:"", c:"Badiiy", m:"Badiiy \u00b7 000 bet", p:50000, img:"sn7.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."},
+ {id:"sn7", t:"Osuda oila", a:"", c:"Oila", m:"Oila", p:36000, img:"sn7.jpg",
+  au:"",
+  d:"Turmushda o'zaro bir-birini tushunish asoslari."},
 
- {id:"sn8", t:"Namuna kitob 8", a:"", c:"Badiiy", m:"Badiiy \u00b7 000 bet", p:50000, img:"sn8.jpg",
-  au:"Muallif ismi",
-  d:"NAMUNA TAVSIF. Kitobning 2-3 qatorlik qisqa tavsifi shu yerga yoziladi."}
+ {id:"sn8", t:"Sahobalardek bo'ling!", a:"", c:"Siyrat", m:"Siyrat", p:36000, img:"sn8.jpg",
+  au:"Solih Ahmad Shomiy",
+  d:"Sahobalar hayotidan lavhalar."},
+
+ {id:"sn9", t:"Mo'jiza", a:"", c:"Badiiy", m:"Badiiy", p:60000, img:"sn9.jpg",
+  au:"R.J. Palacio",
+  d:"Dunyo bestselleri: 17 mln nusxa, 57 tilga tarjima qilingan."}
 ];
 
 var REGIONS = ["Toshkent shahri","Toshkent viloyati","Andijon","Buxoro","Farg'ona","Jizzax","Xorazm",
