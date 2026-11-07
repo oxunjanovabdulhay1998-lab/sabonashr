@@ -603,6 +603,9 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 @media (prefers-reduced-motion: reduce){
   body::before, #order::before, .hero-bk::before, .banner .bn-bg, .hero-bk .flip{animation:none}
 }
+.bk .box, .pk .box{font-size:11.5px; color:var(--ink); background:rgba(76,175,80,.12); border-radius:6px;
+  padding:3px 7px; display:inline-block; margin:-4px 0 8px; font-weight:600}
+.pk .sub .bxs{color:var(--muted)}
 /* muqova rasmi zaxira matn ustida turadi */
 .ph img{position:relative; z-index:1}
 </style>
@@ -650,7 +653,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
           <div class="au">R.J. Palacio</div>
           <blockquote>Sen oddiy insonlar qatoriga qo'shila olmaysan,
             chunki sen ajralib turish uchun yaralgansan.</blockquote>
-          <div class="facts"><span>📚 17 mln nusxa sotilgan</span><span>🌍 57 tilga tarjima qilingan</span></div>
+          <div class="facts"><span>📚 17 mln nusxa sotilgan</span><span>🌍 57 tilga tarjima qilingan</span><span>📖 368 bet</span><span>📦 1 qutida 20 dona</span></div>
           <div class="buy">
             <div class="price" id="heroPrice"><small>Do'kon narxi · −5%</small><s class="was">60 000</s> 57 000 so'm</div>
             <button class="btn btn-gold" onclick="openOrder('sn9')">Buyurtma berish →</button>
@@ -979,39 +982,39 @@ var ORDER_ENDPOINT = "/api/order";   /* Vercel serverless funksiyasi */
 var DISCOUNT = 5;
 
 var BOOKS = [
- {id:"sn9", t:"Mo'jiza", a:"", c:"Badiiy", m:"Badiiy", p:60000, img:"sn9.jpg", hot:"Bestseller",
+ {id:"sn9", t:"Mo'jiza", a:"", c:"Badiiy", m:"Badiiy · 368 bet", p:60000, pg:368, box:20, img:"sn9.jpg", hot:"Bestseller",
   au:"R.J. Palacio",
   d:"Dunyo bestselleri: 17 mln nusxa, 57 tilga tarjima qilingan."},
 
- {id:"sn1", t:"Rasulullohni tanidim", a:"", c:"Siyrat", m:"Siyrat", p:32000, img:"sn1.jpg",
+ {id:"sn1", t:"Rasulullohni tanidim", a:"", c:"Siyrat", m:"Siyrat · 168 bet", p:32000, pg:168, box:30, img:"sn1.jpg",
   au:"",
   d:"Rasulullohni ﷺ chindan taniysizmi?!"},
 
- {id:"sn2", t:"Qaddingni ko'tar", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:45000, img:"sn2.jpg",
+ {id:"sn2", t:"Qaddingni ko'tar", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 218 bet", p:45000, pg:218, box:16, img:"sn2.jpg",
   au:"Xolid Munif",
   d:""},
 
- {id:"sn3", t:"Hayot saboqlari", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:30000, img:"sn3.jpg",
+ {id:"sn3", t:"Hayot saboqlari", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 180 bet", p:30000, pg:180, box:40, img:"sn3.jpg",
   au:"Xolid Munif",
   d:"«Inson mehr ulashgan sari uning bir zarrasi ham kamaymaydi»"},
 
- {id:"sn4", t:"Qur'onim — quvonchim", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn4.jpg",
+ {id:"sn4", t:"Qur'onim — quvonchim", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 160 bet", p:33000, pg:160, box:20, img:"sn4.jpg",
   au:"Abdulloh Hammod Balviy",
   d:""},
 
- {id:"sn5", t:"Bu mening Robbim", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn5.jpg",
+ {id:"sn5", t:"Bu mening Robbim", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 168 bet", p:33000, pg:168, box:20, img:"sn5.jpg",
   au:"Doktor Fotima Antar",
   d:"Allohni chindan taniysizmi?!"},
 
- {id:"sn6", t:"Solihlar davrasida", a:"", c:"Ma'naviyat", m:"Ma'naviyat", p:33000, img:"sn6.jpg",
+ {id:"sn6", t:"Solihlar davrasida", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 160 bet", p:33000, pg:160, box:20, img:"sn6.jpg",
   au:"Usmon Shavkatulloh",
   d:""},
 
- {id:"sn7", t:"Osuda oila", a:"", c:"Oila", m:"Oila", p:36000, img:"sn7.jpg",
+ {id:"sn7", t:"Osuda oila", a:"", c:"Oila", m:"Oila · 320 bet", p:36000, pg:320, box:16, img:"sn7.jpg",
   au:"",
   d:"Turmushda o'zaro bir-birini tushunish asoslari."},
 
- {id:"sn8", t:"Sahobalardek bo'ling!", a:"", c:"Siyrat", m:"Siyrat", p:36000, img:"sn8.jpg",
+ {id:"sn8", t:"Sahobalardek bo'ling!", a:"", c:"Siyrat", m:"Siyrat · 208 bet", p:36000, pg:208, box:16, img:"sn8.jpg",
   au:"Solih Ahmad Shomiy",
   d:"Sahobalar hayotidan lavhalar."}
 ];
@@ -1162,7 +1165,7 @@ document.getElementById("lb").addEventListener("click", function(e){
 document.getElementById("bookGrid").innerHTML = BOOKS.map(function(b){
   return '<div class="bk'+(b.hot?' is-hot':'')+'" data-id="'+b.id+'" role="button" tabindex="0">'+cover(b)+
          '<div class="in"><b>'+b.t+'</b>'+
-         (b.a?'<div class="ar">'+b.a+'</div>':'')+'<div class="mt">'+b.m+'</div>'+
+         (b.a?'<div class="ar">'+b.a+'</div>':'')+'<div class="mt">'+b.m+'</div>'+boxHtml(b)+
          '<div class="pr">'+priceHtml(b.p)+'</div>'+
          '<span class="more" data-more="g'+b.id+'" role="button" tabindex="0">Batafsil <i>▾</i></span>'+
          '<div class="desc" id="d-g'+b.id+'"><em>'+b.au+'</em>'+b.d+'</div>'+
@@ -1258,7 +1261,7 @@ function renderPick(){
   document.getElementById("pick").innerHTML = list.map(function(b){
     return '<div class="pk'+(sel[b.id]?' on':'')+'" data-id="'+b.id+'" role="button" tabindex="0">'+
       cover(b)+'<div class="mark">✓</div><div class="in"><b>'+b.t+'</b>'+
-      '<div class="mt">'+b.m+'</div><div class="pr">'+priceHtml(b.p)+'</div>'+
+      '<div class="mt">'+b.m+'</div>'+boxHtml(b)+'<div class="pr">'+priceHtml(b.p)+'</div>'+
       '<span class="more" data-more="'+b.id+'" role="button" tabindex="0">Batafsil <i>▾</i></span>'+
       '<div class="desc" id="d-'+b.id+'"><em>'+b.au+'</em>'+b.d+'</div>'+
       '<div class="act">'+actHtml(b)+'</div>'+
@@ -1273,7 +1276,7 @@ function actHtml(b){
   return '<div class="ps"><button type="button" data-q="-1" aria-label="Kamaytirish">−</button>'+
          '<input type="number" inputmode="numeric" min="1" max="'+QMAX+'" value="'+n+'" aria-label="Soni">'+
          '<button type="button" data-q="1" aria-label="Ko\'paytirish">+</button></div>'+
-         '<div class="sub">Jami: <b>'+money(dp(b.p)*n)+'</b></div>';
+         '<div class="sub">Jami: <b>'+money(dp(b.p)*n)+'</b><span class="bxs">'+boxSplit(b,n)+'</span></div>';
 }
 function refreshCard(id){
   var el = document.querySelector('.pk[data-id="'+id+'"]'); if(!el) return;
@@ -1309,7 +1312,8 @@ document.getElementById("pick").addEventListener("input", function(e){
   var el = e.target.closest(".pk"), id = el.dataset.id, v = parseInt(e.target.value,10);
   if(v >= 1){ sel[id] = Math.min(QMAX, v);
     if(v > QMAX) e.target.value = QMAX;
-    el.querySelector(".sub b").textContent = money(dp(byId(id).p)*sel[id]); bar(); }
+    el.querySelector(".sub b").textContent = money(dp(byId(id).p)*sel[id]);
+    el.querySelector(".sub .bxs").textContent = boxSplit(byId(id), sel[id]); bar(); }
 });
 document.getElementById("pick").addEventListener("change", function(e){
   if(e.target.tagName !== "INPUT") return;
@@ -1322,6 +1326,13 @@ function chosen(){ return Object.keys(sel).map(function(id){ return {b:byId(id),
 function dp(p){ return Math.round(p * (100 - DISCOUNT) / 100); }          /* chegirmali narx */
 function base(){ return chosen().reduce(function(s,x){ return s + x.b.p*x.n; },0); }
 function total(){ return chosen().reduce(function(s,x){ return s + dp(x.b.p)*x.n; },0); }
+function boxHtml(b){ return b.box ? '<div class="box">📦 1 qutida '+b.box+' dona</div>' : ''; }
+function boxSplit(b, n){
+  if(!b.box) return '';
+  var q = Math.floor(n / b.box), r = n % b.box;
+  if(!q) return '';
+  return ' · ' + q + ' quti' + (r ? ' + ' + r + ' dona' : '');
+}
 function priceHtml(p){
   return '<span class="old">'+money(p)+'</span>'+money(dp(p))+'<span class="off">−'+DISCOUNT+'%</span>';
 }
@@ -1446,7 +1457,7 @@ function payMode(){
 
 function renderReview(){
   document.getElementById("revBooks").innerHTML = chosen().map(function(x){
-    return '<div class="ln"><span>'+x.b.t+' × '+x.n+'</span><span>'+money(dp(x.b.p)*x.n)+'</span></div>';
+    return '<div class="ln"><span>'+x.b.t+' × '+x.n+boxSplit(x.b,x.n)+'</span><span>'+money(dp(x.b.p)*x.n)+'</span></div>';
   }).join("");
   document.getElementById("rBase").textContent = money(base());
   document.getElementById("rDisc").textContent = "−" + money(base() - total());
