@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
 <title>Sabo Nashr — kitob buyurtma qilish | O'zbekiston bo'ylab yetkazib berish</title>
 <meta name="description" content="Sabo Nashr — ilm va ilhom manbai. Saralangan kitoblar katalogi. Katalogdan kitobni tanlang, buyurtmangizni 2 daqiqada rasmiylashtiring. O'zbekiston bo'ylab BTS va EMU orqali yetkazib beramiz.">
 <link rel="icon" href="covers/sn-mark.png">
@@ -699,6 +699,13 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
   .hero-bk .price{font-size:16px}
   .hero-bk .price .was{font-size:11.5px}
 }
+#next.off{opacity:.55; box-shadow:none}
+.o-ft .bar-info .warn{color:#C0392B; font-weight:700}
+.need{border-color:#E06155 !important; box-shadow:0 0 0 3px rgba(224,97,85,.18) !important; border-radius:14px}
+#dlv.need, #pick.need{outline:2px dashed #E06155; outline-offset:6px; box-shadow:none !important}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+#next.shake{animation:shake .4s}
+.inline-next{width:100%; justify-content:center; margin-top:4px; padding:15px; font-size:16px}
 /* muqova rasmi zaxira matn ustida turadi */
 .ph img{position:relative; z-index:1}
 </style>
@@ -949,11 +956,11 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
       <p class="hint">Menejerimiz shu ma'lumotlar orqali siz bilan bog'lanadi.</p>
       <div class="fld">
         <label for="nm">Kitob do'kon nomi</label>
-        <input id="nm" placeholder="Masalan: Kitobxon" autocomplete="organization" maxlength="120">
+        <input id="nm" placeholder="Masalan: Kitobxon" autocomplete="organization" maxlength="120" enterkeyhint="next">
       </div>
       <div class="fld">
         <label for="ph">Telefon raqam</label>
-        <div class="phone"><span class="cc">+998</span><input id="ph" placeholder="90 123 45 67" inputmode="numeric" autocomplete="tel-national" maxlength="12"></div>
+        <div class="phone"><span class="cc">+998</span><input id="ph" placeholder="90 123 45 67" inputmode="numeric" enterkeyhint="next" autocomplete="tel-national" maxlength="12"></div>
         <div class="tip">Menejer shu raqamga qo'ng'iroq qiladi</div>
       </div>
       <div class="fld">
@@ -974,6 +981,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
         <textarea id="nt" rows="3" maxlength="500"
           placeholder="Masalan: do'kon manzili, mo'ljal, qulay vaqt"></textarea>
       </div>
+      <button type="button" class="btn btn-primary inline-next" onclick="next()">Davom etish →</button>
     </section>
 
     <!-- STEP 4 — TASDIQLASH -->
@@ -1365,7 +1373,7 @@ function actHtml(b){
   var n = sel[b.id];
   if(!n) return '<button type="button" class="pick-btn" data-q="add">Tanlash +</button>';
   return '<div class="ps"><button type="button" data-q="-1" aria-label="Kamaytirish">−</button>'+
-         '<input type="number" inputmode="numeric" min="1" max="'+QMAX+'" value="'+n+'" aria-label="Soni">'+
+         '<input type="number" inputmode="numeric" enterkeyhint="done" min="1" max="'+QMAX+'" value="'+n+'" aria-label="Soni">'+
          '<button type="button" data-q="1" aria-label="Ko\'paytirish">+</button></div>'+
          '<div class="sub">Jami: <b>'+money(dp(b.p)*n)+'</b><span class="bxs">'+boxSplit(b,n)+'</span></div>';
 }
@@ -1583,6 +1591,7 @@ function go(n){
   document.getElementById("back").style.visibility = (n===1 ? "hidden" : "visible");
   document.getElementById("next").textContent = (n===4 ? "Buyurtma berish ✓" : "Davom etish →");
   window.scrollTo({top:0,behavior:"smooth"});
+  var ov = document.getElementById("order"); if(ov) ov.scrollTo({top:0,behavior:"smooth"});
   bar();
 }
 function bar(){
@@ -1595,8 +1604,50 @@ function bar(){
                     phoneDigits().length === 9 &&
                     !!document.getElementById("rg").value &&
                     !!dlv();
-  document.getElementById("next").disabled = !ok;
+  var nb = document.getElementById("next");
+  if(!sending){ nb.disabled = false; nb.classList.toggle("off", !ok); nb.setAttribute("aria-disabled", ok ? "false" : "true"); }
+  return ok;
 }
+var sending = false;
+/* ---- telefon klaviaturasi: pastki panel klaviatura ustida tursin ---- */
+(function(){
+  var vv = window.visualViewport, ft = document.getElementById("oft"); if(!vv || !ft) return;
+  function place(){
+    var kb = window.innerHeight - vv.height - vv.offsetTop;
+    ft.style.transform = kb > 60 ? "translateY(" + (-kb) + "px)" : "";
+  }
+  vv.addEventListener("resize", place); vv.addEventListener("scroll", place);
+})();
+/* Enter: keyingi maydonga o'tish / klaviaturani yopish */
+document.getElementById("nm").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); document.getElementById("ph").focus(); } });
+document.getElementById("ph").addEventListener("keydown", function(e){ if(e.key==="Enter"){ e.preventDefault(); this.blur(); document.getElementById("rg").focus(); } });
+document.getElementById("pick").addEventListener("keydown", function(e){ if(e.key==="Enter" && e.target.tagName==="INPUT"){ e.preventDefault(); e.target.blur(); } });
+/* tugma bosilganda nima yetishmayotganini ko'rsatamiz */
+function missing(){
+  var m = [];
+  if(step===1){ if(!chosen().length) m.push({t:"Avval kamida bitta kitob tanlang", el:document.getElementById("pick")}); }
+  if(step===3){
+    if(!document.getElementById("nm").value.trim()) m.push({t:"Do'kon nomini yozing", el:document.getElementById("nm")});
+    if(phoneDigits().length !== 9) m.push({t:"Telefon raqamni to'liq yozing", el:document.querySelector(".phone") || document.getElementById("ph")});
+    if(!document.getElementById("rg").value) m.push({t:"Viloyatni tanlang", el:document.getElementById("rg")});
+    if(!dlv()) m.push({t:"Yetkazib berish usulini tanlang", el:document.getElementById("dlv")});
+  }
+  return m;
+}
+function warn(){
+  var m = missing(); if(!m.length) return;
+  var info = document.getElementById("barInfo");
+  info.innerHTML = '<span class="warn">⚠ '+m[0].t+'</span>';
+  document.querySelectorAll(".need").forEach(function(e){ e.classList.remove("need"); });
+  m.forEach(function(x){ x.el.classList.add("need"); });
+  m[0].el.scrollIntoView({behavior:"smooth", block:"center"});
+  var fe = m[0].el.matches("input,select,textarea") ? m[0].el : m[0].el.querySelector("input");
+  if(fe && step===3) setTimeout(function(){ fe.focus({preventScroll:true}); }, 350);
+  var nb = document.getElementById("next"); nb.classList.remove("shake"); void nb.offsetWidth; nb.classList.add("shake");
+  clearTimeout(warn.t); warn.t = setTimeout(function(){ bar(); }, 3500);
+}
+document.addEventListener("input", function(e){ if(e.target.classList) { var f = e.target.closest(".need"); if(f) f.classList.remove("need"); } });
+document.addEventListener("change", function(e){ var f = e.target.closest && e.target.closest(".need"); if(f) f.classList.remove("need"); });
 function dlv(){ var el = document.querySelector('input[name="dl"]:checked'); return el ? el.value : ""; }
 document.getElementById("dlv").addEventListener("change", bar);
 ["nm","ph","rg"].forEach(function(id){
@@ -1606,6 +1657,7 @@ document.getElementById("dlv").addEventListener("change", bar);
 
 function prev(){ var i = FLOW.indexOf(step); if(i>0) go(FLOW[i-1]); }
 function next(){
+  if(!bar()){ warn(); return; }
   if(step===1){ if(window.fbq) fbq("track","InitiateCheckout",{value:total(),currency:"UZS"}); go(3); return; }
   if(step<4){ go(FLOW[FLOW.indexOf(step)+1]); return; }
   submitOrder();
@@ -1615,7 +1667,7 @@ function next(){
 function submitOrder(){
   if(sent) return;
   var btn = document.getElementById("next"), err = document.getElementById("err");
-  btn.disabled = true; btn.textContent = "Yuborilmoqda...";
+  sending = true; btn.disabled = true; btn.textContent = "Yuborilmoqda...";
   err.classList.remove("on");
 
   var payload = {
@@ -1646,7 +1698,7 @@ function submitOrder(){
   }).catch(function(){
     err.textContent = "Buyurtmani yuborishda xatolik. Iltimos qayta urinib ko'ring yoki +998 95 668 04 07 raqamiga qo'ng'iroq qiling.";
     err.classList.add("on");
-    btn.disabled = false; btn.textContent = "Buyurtma berish ✓";
+    sending = false; btn.disabled = false; btn.textContent = "Buyurtma berish ✓";
   });
 }
 
