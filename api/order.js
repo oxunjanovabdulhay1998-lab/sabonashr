@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     const name   = String(b.name   || "").slice(0, 120);
     const phone  = String(b.phone  || "").slice(0, 40);
     const region = String(b.region || "").slice(0, 80);
-    const branch = String(b.branch || "").slice(0, 200);
+    const delivery = String(b.delivery || b.branch || "").slice(0, 60);
     const note    = String(b.note || "").slice(0, 500);
     const pay     = b.pay === "hozir" ? "hozir" : "keyin";
     const receipt = typeof b.receipt === "string" ? b.receipt : "";
@@ -51,10 +51,10 @@ export default async function handler(req, res) {
 
     const text =
       "🏷 <b>SABO NASHR</b>\n🆕 <b>YANGI BUYURTMA (sayt)</b>\n\n" +
-      `👤 <b>${esc(name)}</b>\n` +
+      `🏪 Do'kon: <b>${esc(name)}</b>\n` +
       `📞 ${esc(phone)}\n` +
       `📍 ${esc(region)}\n` +
-      (branch ? `🏤 ${esc(branch)}\n` : "") +
+      (delivery ? `🚚 Yetkazib berish: <b>${esc(delivery)}</b>\n` : "") +
       "\n📚 <b>Kitoblar:</b>\n" + lines.join("\n") +
       `\n\nChegirmasiz: ${money(base)}` +
       `\n🏷 Do'kon chegirmasi ${DISCOUNT}%: −${money(base - total)}` +
