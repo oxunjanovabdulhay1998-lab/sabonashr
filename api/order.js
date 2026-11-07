@@ -3,6 +3,9 @@
 //   TELEGRAM_BOT_TOKEN  — bot tokeni
 //   TELEGRAM_CHAT_ID    — guruh yoki kanal ID si (masalan -1004325663257)
 
+// Do'konlar uchun avtomatik chegirma (foizda). index.html dagi DISCOUNT bilan bir xil bo'lsin.
+const DISCOUNT = 5;
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -34,12 +37,14 @@ export default async function handler(req, res) {
     const money = n => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
     const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-    let total = 0;
+    let base = 0, total = 0;
     const lines = items.map(i => {
       const qty = Math.max(1, Math.min(9999, parseInt(i.qty, 10) || 1));
       const price = parseInt(i.price, 10) || 0;
-      total += qty * price;
-      return `• ${esc(i.title)} × ${qty} — ${money(qty * price)}`;
+      const dprice = Math.round(price * (100 - DISCOUNT) / 100);
+      base += qty * price;
+      total += qty * dprice;
+      return `• ${esc(i.title)} × ${qty} — ${money(qty * dprice)}`;
     });
 
     const when = new Date().toLocaleString("ru-RU", { timeZone: "Asia/Tashkent" });
@@ -51,7 +56,9 @@ export default async function handler(req, res) {
       `📍 ${esc(region)}\n` +
       (branch ? `🏤 ${esc(branch)}\n` : "") +
       "\n📚 <b>Kitoblar:</b>\n" + lines.join("\n") +
-      `\n\n💰 <b>Jami: ${money(total)}</b>` +
+      `\n\nChegirmasiz: ${money(base)}` +
+      `\n🏷 Do'kon chegirmasi ${DISCOUNT}%: −${money(base - total)}` +
+      `\n💰 <b>Jami: ${money(total)}</b>` +
       "\n<i>(yetkazib berish alohida)</i>" +
       (note ? `\n\n📝 <b>Izoh:</b> ${esc(note)}` : "") +
       (pay === "hozir"
