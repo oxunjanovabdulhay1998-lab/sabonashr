@@ -3,14 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, interactive-widget=resizes-content">
-<title>Sabo Nashr — kitob buyurtma qilish | O'zbekiston bo'ylab yetkazib berish</title>
-<meta name="description" content="Sabo Nashr — ilm va ilhom manbai. Saralangan kitoblar katalogi. Katalogdan kitobni tanlang, buyurtmangizni 2 daqiqada rasmiylashtiring. O'zbekiston bo'ylab BTS va EMU orqali yetkazib beramiz.">
-<link rel="icon" href="covers/sn-mark.png">
+<title>Sabo Nashr — kitob do'konlari uchun ulgurji buyurtma</title>
+<meta name="description" content="Sabo Nashr kitoblarini o'z do'koningizda soting: ulgurji narxlar, barcha kitoblarga −5% chegirma. Kitoblarni tanlang, sonini belgilang — biz bog'lanib, O'zbekiston bo'ylab yetkazamiz.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Sabo Nashr">
+<meta property="og:title" content="Sabo Nashr — kitob do'konlari uchun ulgurji buyurtma">
+<meta property="og:description" content="«Mo'jiza» va boshqa kitoblar ulgurji narxda. Do'konlar uchun −5% chegirma, O'zbekiston bo'ylab yetkazib berish.">
+<meta property="og:url" content="https://sabonashr.vercel.app/">
+<meta property="og:image" content="https://sabonashr.vercel.app/covers/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="covers/sn-mark.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- Meta Pixel: Sabo Nashr uchun yangi piksel keyin qo'yiladi -->
+<!-- Meta Pixel: ID ni shu yerga yozing (masalan "123456789012345"). Bo'sh bo'lsa piksel yuklanmaydi. -->
+<script>
+var META_PIXEL_ID = "";
+if(META_PIXEL_ID){
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', META_PIXEL_ID); fbq('track', 'PageView');
+}
+</script>
 
 <style>
 :root{
@@ -642,7 +663,12 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 .rev .ln span:last-child{white-space:nowrap; text-align:right}
 @media(max-width:640px){
   /* yuqori panel */
-  .o-hd .logo b{white-space:nowrap; font-size:17px}
+  .o-hd .logo > span{display:none}
+  header .hd .logo span span{display:none}
+  header .hd .logo b{white-space:nowrap; font-size:17px}
+  header .hd .logo img{width:32px}
+  header .hd .btn{white-space:nowrap; padding:10px 16px; font-size:13.5px}
+  .o-hd .logo img{width:34px}
   .o-hd .ask{padding:4px 12px 4px 4px; gap:8px; max-width:none; animation:none;
     box-shadow:0 4px 12px rgba(34,158,217,.3)}
   .o-hd .ask .ic{width:32px; height:32px}
@@ -689,7 +715,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 }
 @media(max-width:400px){ .hero-bk .buy .btn .dt{display:none} }
 @media(max-width:350px){
-  .o-hd .logo{display:none}
+  .o-hd .logo img{width:28px}
   .o-hd .ask{margin-left:0}
   .o-ft #next{padding:12px 13px; font-size:13.5px}
   .o-ft .bar-info{font-size:11px}
@@ -716,7 +742,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
   <div class="wrap hd">
     <a class="logo" href="#top">
       <img src="covers/sn-mark.png" alt="" onerror="this.style.display='none'">
-      <span><b>Sabo Nashr</b><span>Nashriyot</span></span>
+      <span><b>Sabo Nashr</b><span>Ilm va ilhom manbai</span></span>
     </a>
     <nav>
       <a href="#katalog">Kitoblar</a>
@@ -779,12 +805,12 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
         <div class="wsale-txt">
           <div class="eyebrow">Ulgurji savdo</div>
           <h2>Do'kon, kutubxona va tadbirkorlar uchun</h2>
-          <p>Ko'p miqdordagi xaridlarga alohida ulgurji narx. Ro'yxat va shartlarni
-             bir daqiqada yuboramiz — raqamga qo'ng'iroq qiling yoki Telegramga yozing.</p>
+          <p>Saytdagi narxlar — ulgurji narxlar, barcha kitoblarga qo'shimcha −5% chegirma.
+             Katta hajmdagi buyurtma yoki savollar bo'yicha qo'ng'iroq qiling yoki Telegramda yozing.</p>
         </div>
         <div class="wsale-btns">
           <a class="btn btn-light" href="tel:+998956680407">✆ +998 95 668 04 07</a>
-          <a class="btn btn-ghost wsale-tg" href="https://t.me/Sabo_nashr" target="_blank" rel="noopener">✈ Telegramda yozish</a>
+          <a class="btn btn-ghost wsale-tg" href="https://t.me/Kitobdor_ulgurji" target="_blank" rel="noopener">✈ Telegramda yozish</a>
         </div>
       </div>
     </div>
@@ -794,10 +820,10 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
     <div class="wrap f-grid">
       <div><div class="f-ic">🛡</div><h3>Original nashr</h3>
         <p>Barcha kitoblar rasmiy nashriyotdan. Sifatli qog'oz, aniq bosma, mustahkam muqova.</p></div>
-      <div><div class="f-ic">📦</div><h3>BTS va EMU orqali</h3>
-        <p>O'zbekiston bo'ylab pochta xizmatlari orqali yuboramiz. 1 kg yuk uchun yetkazish 30 000 so'm.</p></div>
-      <div><div class="f-ic">💳</div><h3>Oson to'lov</h3>
-        <p>Menejer bilan buyurtma tasdiqlangach, to'lov oldindan amalga oshiriladi va kitob jo'natiladi.</p></div>
+      <div><div class="f-ic">🚚</div><h3>Qulay yetkazib berish</h3>
+        <p>Taksi, Yandex, BTS yoki EMU — do'koningiz uchun qulay usulni tanlaysiz. Yetkazish narxini menejer aytadi.</p></div>
+      <div><div class="f-ic">🏷</div><h3>−5% chegirma</h3>
+        <p>Do'konlar uchun barcha kitoblarga avtomatik chegirma. To'lov tartibi menejer bilan kelishiladi.</p></div>
       <div><div class="f-ic">✆</div><h3>Jonli aloqa</h3>
         <p>Buyurtmadan so'ng menejer qo'ng'iroq qilib, barcha tafsilotni aniqlaydi.</p></div>
     </div>
@@ -812,10 +838,10 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
           <p>Katalogdan kerakli kitoblarni belgilaysiz. Bir nechtasini ham tanlash mumkin.</p></div>
         <div class="st"><div class="n">02</div><h3>Sonini belgilang</h3>
           <p>Har bir kitobdan nechta kerakligini kiritasiz. Umumiy summa darhol ko'rinadi.</p></div>
-        <div class="st"><div class="n">03</div><h3>Ma'lumotlaringizni qoldiring</h3>
-          <p>Ism-familya, telefon raqam va viloyatingizni kiritasiz. 30 soniya vaqt oladi.</p></div>
-        <div class="st"><div class="n">04</div><h3>Tasdiqlang va qabul qiling</h3>
-          <p>Menejer bog'lanib to'lov ma'lumotlarini beradi. To'lovdan so'ng kitob BTS yoki EMU orqali jo'natiladi.</p></div>
+        <div class="st"><div class="n">03</div><h3>Do'kon ma'lumotlarini qoldiring</h3>
+          <p>Do'kon nomi, telefon raqam, viloyat va yetkazib berish usulini kiritasiz. 30 soniya vaqt oladi.</p></div>
+        <div class="st"><div class="n">04</div><h3>Tekshiring va qabul qiling</h3>
+          <p>Menejer bog'lanib, yetkazish va to'lovni kelishib oladi. Kitoblar siz tanlagan usulda jo'natiladi.</p></div>
       </div>
     </div>
   </section>
@@ -825,14 +851,16 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
       <div class="eyebrow" style="text-align:center">Savol-javob</div>
       <h2 style="text-align:center">Ko'p so'raladigan savollar</h2>
       <div class="faq">
-        <details class="q"><summary>Yetkazib berish qancha narx turadi?</summary>
-          <p>1 kg yuk uchun 30 000 so'm. Aniq summa buyurtma vaznига qarab menejer tomonidan aytiladi.</p></details>
-        <details class="q"><summary>Kitob qanday yetkaziladi?</summary>
-          <p>O'zbekiston bo'ylab BTS yoki EMU pochta xizmatlari orqali jo'natamiz. Sizga yaqin filialni tanlashingiz mumkin.</p></details>
+        <details class="q"><summary>Chegirma qanday hisoblanadi?</summary>
+          <p>Do'konlar uchun barcha kitoblarga avtomatik 5% chegirma qilinadi. Chegirmali narx har bir kitob ostida va buyurtma summasida ko'rsatiladi.</p></details>
+        <details class="q"><summary>Kitoblar qanday yetkaziladi?</summary>
+          <p>Taksi, Yandex, BTS yoki EMU orqali — buyurtma berishda o'zingizga qulay usulni tanlaysiz.</p></details>
+        <details class="q"><summary>Yetkazib berish qancha turadi?</summary>
+          <p>Narx tanlangan usul va manzilingizga bog'liq. Aniq summani menejer buyurtmani tasdiqlashda aytadi.</p></details>
         <details class="q"><summary>To'lovni qanday amalga oshiraman?</summary>
-          <p>Menejer buyurtmani tasdiqlagach, to'lov ma'lumotlarini beradi. To'lov oldindan amalga oshiriladi, so'ng kitob jo'natiladi.</p></details>
+          <p>To'lov tartibi menejer bilan kelishiladi. Buyurtmadan so'ng menejer qo'ng'iroq qilib, barcha tafsilotni aytadi.</p></details>
         <details class="q"><summary>Bir nechta kitob buyurtma qilsam bo'ladimi?</summary>
-          <p>Albatta. Katalogdan bir nechta kitobni belgilab, har biridan nechta kerakligini ko'rsatishingiz mumkin.</p></details>
+          <p>Albatta. Bir nechta kitobni tanlab, har biridan kerakli sonni kiritasiz. Necha quti bo'lishi ham hisoblab ko'rsatiladi.</p></details>
         <details class="q"><summary>Buyurtmani bekor qilsam bo'ladimi?</summary>
           <p>Ha. Menejer qo'ng'iroq qilganda aytsangiz kifoya — to'lov qilinmagan bo'lsa buyurtma bekor qilinadi.</p></details>
       </div>
@@ -841,8 +869,8 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 
   <div class="wrap">
     <div class="band">
-      <h2>Kitobingizni bugun buyurtma qiling</h2>
-      <p>Katalogdan tanlang — qolganini biz hal qilamiz.</p>
+      <h2>Do'koningiz uchun bugun buyurtma bering</h2>
+      <p>Kitoblarni tanlang — qolganini biz hal qilamiz.</p>
       <button class="btn btn-light" onclick="openOrder()">Buyurtma berish →</button>
     </div>
   </div>
@@ -853,10 +881,10 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
   <div class="wrap">
     <div class="ft">
       <div>
-        <img src="covers/sn-logo.png" alt="Sabo Nashr" style="width:92px;margin-bottom:18px"
+        <img src="covers/sn-logo.png" alt="Sabo Nashr" style="width:150px;margin-bottom:18px"
              onerror="this.style.display='none'">
-        <p>Sabo Nashr — sifatli kitoblarni butun O'zbekiston bo'ylab yetkazib beruvchi nashriyot.
-           BTS va EMU pochta xizmatlari orqali jo'natamiz. Buyurtmangizni 2 daqiqada rasmiylashtiring.</p>
+        <p>Sabo Nashr — ilm va ilhom manbai. Kitob do'konlari uchun ulgurji savdo:
+           O'zbekiston bo'ylab Taksi, Yandex, BTS va EMU orqali yetkazamiz.</p>
       </div>
       <div>
         <h4>Bo'limlar</h4>
@@ -936,18 +964,9 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 
     <!-- STEP 2 — SONI -->
     <section class="step" data-s="2">
-      <h2>Nechtadan kerak?</h2>
-      <p class="hint">Har bir kitob uchun sonini belgilang.</p>
-      <div id="qtyList"></div>
-      <div class="rev" style="margin-top:20px">
-        <div class="tot"><span>To'lanadigan summa</span><span class="g" id="subtotal">0 so'm</span></div>
-        <div class="ln" style="margin-top:10px"><span>Yetkazib berish</span>
-          <span>pochtada, olayotganda</span></div>
-        <p style="margin:12px 0 0;font-size:13px;color:var(--muted)">
-          Yetkazib berish haqini <b>pochta (BTS / EMU) da, kitobni olayotganda</b> to'laysiz —
-          taxminan 30 000 so'm (1 kg). Bu summa bizga tushmaydi.
-          Yetkazib berish muddati: <b>1–3 kun</b>.</p>
-      </div>
+      <!-- eski "Soni" bosqichi: endi son 1-bosqichda belgilanadi, bu bo'lim ko'rsatilmaydi -->
+      <div id="qtyList" hidden></div>
+      <span id="subtotal" hidden></span>
     </section>
 
     <!-- STEP 3 — MA'LUMOTLAR -->
@@ -1099,11 +1118,11 @@ var BOOKS = [
 
  {id:"sn4", t:"Qur'onim — quvonchim", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 160 bet", p:33000, pg:160, box:20, img:"sn4.jpg",
   au:"Abdulloh Hammod Balviy",
-  d:"«Qur’on — quvonchim» kitobi inson qalbiga quvonch, umid va xotirjamlik bag‘ishlaydi. Unda Qur’oni karim oyatlari orqali Alloh taoloning bandalariga bergan buyuk ne’matlari, xushxabarlari va va’dalari yoritiladi. Har bir oyat insonni tafakkurga, shukrga va Qur’on bilan yashashga chorlaydi. Oyatlardan keltirilgan iqtiboslar va ibratli xulosalar esa kitobxonni Qur’on tilovatiga yanada mehr qo‘yishga undaydi."},
+  d:"«Qur’onim — quvonchim» kitobi inson qalbiga quvonch, umid va xotirjamlik bag‘ishlaydi. Unda Qur’oni karim oyatlari orqali Alloh taoloning bandalariga bergan buyuk ne’matlari, xushxabarlari va va’dalari yoritiladi. Har bir oyat insonni tafakkurga, shukrga va Qur’on bilan yashashga chorlaydi. Oyatlardan keltirilgan iqtiboslar va ibratli xulosalar esa kitobxonni Qur’on tilovatiga yanada mehr qo‘yishga undaydi."},
 
  {id:"sn5", t:"Bu mening Robbim", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 168 bet", p:33000, pg:168, box:20, img:"sn5.jpg",
   au:"Doktor Fotima Antar",
-  d:"«Bu mening Rabbim» — insonni o‘z Robbini chuqurroq tanishga, Unga bo‘lgan iymon va e’tiqodini mustahkamlashga chorlovchi kitob. Unda Alloh taoloning bandalariga bo‘lgan rahmati, quvonch va musibat paytidagi bandaning holati, haqiqiy tavakkul, ishonch va rozilik kabi muhim aqidaviy masalalar yoritilgan. Bu kitob insonni Robbini tanishga, har bir holatda Unga suyanib yashashga undaydi."},
+  d:"«Bu mening Robbim» — insonni o‘z Robbini chuqurroq tanishga, Unga bo‘lgan iymon va e’tiqodini mustahkamlashga chorlovchi kitob. Unda Alloh taoloning bandalariga bo‘lgan rahmati, quvonch va musibat paytidagi bandaning holati, haqiqiy tavakkul, ishonch va rozilik kabi muhim aqidaviy masalalar yoritilgan. Bu kitob insonni Robbini tanishga, har bir holatda Unga suyanib yashashga undaydi."},
 
  {id:"sn6", t:"Solihlar davrasida", a:"", c:"Ma'naviyat", m:"Ma'naviyat · 160 bet", p:33000, pg:160, box:20, img:"sn6.jpg",
   au:"Usmon Shavkatulloh",
