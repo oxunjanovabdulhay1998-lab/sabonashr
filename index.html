@@ -211,6 +211,18 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
 .pk b{display:block; font-size:13px; line-height:1.3; margin-bottom:4px}
 .pk .mt{font-size:11px; color:var(--muted); margin-bottom:7px}
 .pk .pr{font-size:13px; font-weight:700; color:var(--green)}
+.pk{cursor:pointer; text-align:left}
+.pk .act{margin-top:10px}
+.pk .pick-btn{width:100%; border:1px solid var(--line); background:var(--green-soft); color:var(--green);
+  font:700 13px/1 Manrope,sans-serif; padding:10px; border-radius:10px; cursor:pointer}
+.pk .ps{display:flex; align-items:center; gap:6px}
+.pk .ps button{width:34px; height:34px; flex:0 0 34px; border-radius:10px; border:0; cursor:pointer;
+  background:var(--green); color:#fff; font:700 18px/1 Manrope,sans-serif}
+.pk .ps input{flex:1; min-width:0; height:34px; text-align:center; border:1px solid var(--line); border-radius:10px;
+  font:700 15px/1 Manrope,sans-serif; color:var(--ink); background:#fff; -moz-appearance:textfield}
+.pk .ps input::-webkit-outer-spin-button,.pk .ps input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.pk .sub{font-size:12px; color:var(--muted); margin-top:7px}
+.pk .sub b{display:inline; color:var(--ink); font-size:12px}
 
 .qty{background:var(--card); border-radius:16px; padding:16px; display:flex; align-items:center;
   gap:16px; margin-bottom:12px; box-shadow:0 2px 10px rgba(36,16,56,.06)}
@@ -249,7 +261,7 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
   backdrop-filter:blur(10px); border-top:1px solid var(--line); padding:16px 0; z-index:6}
 .o-ft .wrap{display:flex; align-items:center; gap:14px; max-width:880px}
 .o-ft .bar-info{font-size:13.5px; color:var(--muted); margin-right:auto}
-.o-ft .bar-info b{color:var(--ink); font-size:15px}
+.o-ft .bar-info b{color:var(--ink); font-size:15px; white-space:nowrap}
 
 .done{text-align:center; padding:60px 20px}
 .done .ok{width:74px;height:74px;border-radius:var(--pill);background:var(--green-soft);color:var(--green);
@@ -596,9 +608,9 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
           </div>
         </div>
       </div>
-      <h1 class="cat-h1">Kitobni tanlang</h1>
-      <p class="sub">Sabo Nashr — ilm va ilhom manbai. Kitob ustiga bosing,
-         sonini belgilang va ma'lumotlaringizni qoldiring — menejerimiz bog'lanib yetkazadi.</p>
+      <h1 class="cat-h1">Siz kitob do'konimisiz?</h1>
+      <p class="sub">Sabo Nashr kitoblarini o'z do'koningizda sotmoqchimisiz? Kitoblarni tanlang,
+         sonini belgilang va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz.</p>
       <div class="books" id="bookGrid"></div>
       <div style="margin-top:34px">
         <button class="btn btn-primary" onclick="openOrder()">Buyurtma berish →</button>
@@ -743,8 +755,9 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
         <div class="bn-veil"></div>
         <div class="bn-txt">
           <span class="bn-pill"><b id="bnN">17</b> ta kitob</span>
-          <h2>Kitoblarni tanlang</h2>
-          <p>Kerakli kitoblarni belgilang, keyingi qadamda har biridan nechta kerakligini kiritasiz.</p>
+          <h2>Siz kitob do'konimisiz?</h2>
+          <p>Sabo Nashr kitoblarini o'z do'koningizda soting: kitoblarni tanlang, sonini belgilang
+             va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz.</p>
         </div>
       </div>
       <input class="search" id="q" placeholder="Kitob nomi yoki mavzu bo'yicha qidirish...">
@@ -754,8 +767,8 @@ footer{background:#EFE9F7; border-top:1px solid var(--line); padding:58px 0 34px
 
       <div class="trust">
         <div><span class="i">✓</span><span><b>Original nashr</b><small>To'g'ridan-to'g'ri nashriyotdan</small></span></div>
-        <div><span class="i">🚚</span><span><b>1–3 kun ichida</b><small>BTS/EMU orqali — kirasi pochtada to'lanadi</small></span></div>
-        <div><span class="i">💳</span><span><b>Plastik karta</b><small>To'lov oldindan, chekni saytga yuklash mumkin</small></span></div>
+        <div><span class="i">🚚</span><span><b>Yetkazib beramiz</b><small>O'zbekiston bo'ylab do'koningizgacha</small></span></div>
+        <div><span class="i">🏷</span><span><b>Ulgurji narx</b><small>Har bir kitob ostida ko'rsatilgan</small></span></div>
         <div><span class="i">☎</span><span><b>Menejer tasdiqlaydi</b><small>Yuborishdan oldin qo'ng'iroq qilamiz</small></span></div>
       </div>
 
@@ -948,7 +961,8 @@ var BOOKS = [
 var REGIONS = ["Toshkent shahri","Toshkent viloyati","Andijon","Buxoro","Farg'ona","Jizzax","Xorazm",
  "Namangan","Navoiy","Qashqadaryo","Qoraqalpog'iston Respublikasi","Samarqand","Sirdaryo","Surxondaryo"];
 
-var STEPS = ["Kitob","Soni","Ma'lumotlar","Tasdiqlash"];
+var STEPS = ["Kitob va soni","Ma'lumotlar","Tasdiqlash"];
+var FLOW = [1,3,4];   /* 2-bosqich (alohida son) olib tashlandi */
 var FALLBACK = "";
 
 /* ============ TO'LOV MA'LUMOTLARI ============
@@ -1181,24 +1195,65 @@ function renderPick(){
   });
   document.getElementById("cnt").textContent = list.length + " ta kitob";
   document.getElementById("pick").innerHTML = list.map(function(b){
-    return '<button class="pk'+(sel[b.id]?' on':'')+'" data-id="'+b.id+'">'+
+    return '<div class="pk'+(sel[b.id]?' on':'')+'" data-id="'+b.id+'" role="button" tabindex="0">'+
       cover(b)+'<div class="mark">✓</div><div class="in"><b>'+b.t+'</b>'+
       '<div class="mt">'+b.m+'</div><div class="pr">'+money(b.p)+'</div>'+
       '<span class="more" data-more="'+b.id+'" role="button" tabindex="0">Batafsil <i>▾</i></span>'+
       '<div class="desc" id="d-'+b.id+'"><em>'+b.au+'</em>'+b.d+'</div>'+
-      '</div></button>';
+      '<div class="act">'+actHtml(b)+'</div>'+
+      '</div></div>';
   }).join("");
+}
+/* ---- kartadagi son tanlagich ---- */
+var QMAX = 9999;
+function actHtml(b){
+  var n = sel[b.id];
+  if(!n) return '<button type="button" class="pick-btn" data-q="add">Tanlash +</button>';
+  return '<div class="ps"><button type="button" data-q="-1" aria-label="Kamaytirish">−</button>'+
+         '<input type="number" inputmode="numeric" min="1" max="'+QMAX+'" value="'+n+'" aria-label="Soni">'+
+         '<button type="button" data-q="1" aria-label="Ko\'paytirish">+</button></div>'+
+         '<div class="sub">Jami: <b>'+money(b.p*n)+'</b></div>';
+}
+function refreshCard(id){
+  var el = document.querySelector('.pk[data-id="'+id+'"]'); if(!el) return;
+  el.classList.toggle("on", !!sel[id]);
+  el.querySelector(".act").innerHTML = actHtml(byId(id));
+  bar();
+}
+function setQty(id, n){
+  n = parseInt(n,10);
+  if(!n || n < 1){ delete sel[id]; }
+  else { sel[id] = Math.min(QMAX, n); }
+  if(window.fbq && sel[id] && Object.keys(sel).length===1){
+    var b = byId(id); fbq("track","ViewContent",{content_name:b.t, value:b.p, currency:"UZS"});
+  }
 }
 document.getElementById("pick").addEventListener("click", function(e){
   var el = e.target.closest(".pk"); if(!el) return;
+  if(e.target.closest(".more") || e.target.closest(".desc")) return;
   var id = el.dataset.id;
-  if(sel[id]) delete sel[id]; else sel[id] = 1;
-  el.classList.toggle("on", !!sel[id]);
-  if(window.fbq && Object.keys(sel).length===1){
-    var b = byId(id);
-    fbq("track","ViewContent",{content_name:b.t, value:b.p, currency:"UZS"});
+  if(e.target.tagName === "INPUT") return;
+  var q = e.target.closest("[data-q]");
+  if(q && q.dataset.q !== "add"){
+    setQty(id, (sel[id]||0) + parseInt(q.dataset.q,10));
+    refreshCard(id); return;
   }
-  bar();
+  if(!sel[id]){
+    setQty(id, 1); refreshCard(id);
+    var inp = el.querySelector(".ps input"); if(inp){ inp.focus(); inp.select(); }
+  }
+});
+document.getElementById("pick").addEventListener("input", function(e){
+  if(e.target.tagName !== "INPUT") return;
+  var el = e.target.closest(".pk"), id = el.dataset.id, v = parseInt(e.target.value,10);
+  if(v >= 1){ sel[id] = Math.min(QMAX, v);
+    if(v > QMAX) e.target.value = QMAX;
+    el.querySelector(".sub b").textContent = money(byId(id).p*sel[id]); bar(); }
+});
+document.getElementById("pick").addEventListener("change", function(e){
+  if(e.target.tagName !== "INPUT") return;
+  var id = e.target.closest(".pk").dataset.id;
+  setQty(id, e.target.value); refreshCard(id);
 });
 
 function byId(id){ return BOOKS.filter(function(b){return b.id===id})[0]; }
@@ -1222,9 +1277,9 @@ document.getElementById("qtyList").addEventListener("click", function(e){
   var row = e.target.closest(".qty"); if(!row) return;
   var id = row.dataset.id;
   if(e.target.classList.contains("rm")){ delete sel[id]; renderQty(); renderPick(); bar();
-    if(!Object.keys(sel).length) go(1); return; }
+    if(!Object.keys(sel).length) go(1); return; }  /* (eski 2-bosqich, ishlatilmaydi) */
   var d = e.target.dataset.d; if(!d) return;
-  sel[id] = Math.max(1, Math.min(99, sel[id] + parseInt(d,10)));
+  sel[id] = Math.max(1, Math.min(QMAX, sel[id] + parseInt(d,10)));
   renderQty(); bar();
 });
 
@@ -1338,8 +1393,8 @@ function renderReview(){
 /* ---- navigatsiya ---- */
 function drawProg(){
   document.getElementById("prog").innerHTML = STEPS.map(function(s,i){
-    var n = i+1, cls = n===step ? "act" : (n<step ? "done" : "");
-    return '<div class="p '+cls+'"><div class="dot">'+(n<step?"✓":n)+'</div><small>'+s+'</small></div>'+
+    var n = FLOW[i], cls = n===step ? "act" : (n<step ? "done" : "");
+    return '<div class="p '+cls+'"><div class="dot">'+(n<step?"✓":(i+1))+'</div><small>'+s+'</small></div>'+
            (i<STEPS.length-1 ? '<div class="bar"></div>' : '');
   }).join("");
 }
@@ -1373,10 +1428,10 @@ function bar(){
   document.getElementById(id).addEventListener("change", bar);
 });
 
-function prev(){ if(step>1) go(step-1); }
+function prev(){ var i = FLOW.indexOf(step); if(i>0) go(FLOW[i-1]); }
 function next(){
-  if(step===1){ if(window.fbq) fbq("track","InitiateCheckout",{value:total(),currency:"UZS"}); go(2); return; }
-  if(step<4){ go(step+1); return; }
+  if(step===1){ if(window.fbq) fbq("track","InitiateCheckout",{value:total(),currency:"UZS"}); go(3); return; }
+  if(step<4){ go(FLOW[FLOW.indexOf(step)+1]); return; }
   submitOrder();
 }
 
@@ -1426,7 +1481,14 @@ function openOrder(id){
   if(id && byId(id)){
     if(sent){ sel = {}; sent = false; }
     sel[id] = sel[id] || 1;
-    renderPick(); go(2);
+    cat = ""; document.getElementById("q").value = "";
+    [].forEach.call(document.getElementById("cats").children, function(x){ x.classList.toggle("on", !x.dataset.c); });
+    renderPick(); go(1);
+    setTimeout(function(){
+      var el = document.querySelector('.pk[data-id="'+id+'"]');
+      if(el){ el.scrollIntoView({block:"center", behavior:"smooth"});
+        var inp = el.querySelector(".ps input"); if(inp){ inp.focus({preventScroll:true}); inp.select(); } }
+    }, 350);
     if(window.fbq){
       var b = byId(id);
       fbq("track","ViewContent",{content_name:b.t, value:b.p, currency:"UZS"});
