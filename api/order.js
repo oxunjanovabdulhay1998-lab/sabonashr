@@ -5,6 +5,7 @@
 
 // Do'konlar uchun avtomatik chegirma (foizda). index.html dagi DISCOUNT bilan bir xil bo'lsin.
 const DISCOUNT = 5;
+const MIN_ORDER = 500000; // eng kam ulgurji buyurtma (chegirmadan keyingi summa)
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -46,6 +47,10 @@ export default async function handler(req, res) {
       total += qty * dprice;
       return `• ${esc(i.title)} × ${qty} — ${money(qty * dprice)}`;
     });
+
+    if (total < MIN_ORDER) {
+      return res.status(400).json({ error: "min_order", min: MIN_ORDER });
+    }
 
     const when = new Date().toLocaleString("ru-RU", { timeZone: "Asia/Tashkent" });
 
