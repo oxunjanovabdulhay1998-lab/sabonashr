@@ -734,6 +734,16 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
 .inline-next{width:100%; justify-content:center; margin-top:4px; padding:15px; font-size:16px}
 /* muqova rasmi zaxira matn ustida turadi */
 .ph img{position:relative; z-index:1}
+/* eng kam buyurtma */
+.min-note{display:inline-flex; align-items:center; gap:8px; background:var(--green-dark); color:#fff;
+  font:700 13px/1.2 Manrope,sans-serif; padding:8px 14px; border-radius:999px; margin:16px 0 0 8px}
+@media(max-width:600px){ .min-note{margin-left:0; margin-top:8px} }
+.o-ft .bar-info .mn{display:block; font-size:11.5px; color:#C0392B; font-weight:600}
+.minbox{display:none; background:#FFF4E5; border:1px solid #F3C98B; color:#5A3B00; border-radius:14px;
+  padding:16px 18px; margin:0 0 16px; font-size:14.5px; line-height:1.5}
+.minbox.on{display:block}
+.minbox b{color:#241038}
+.minbox .btn{margin-top:12px}
 </style>
 </head>
 <body>
@@ -791,6 +801,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
       <p class="sub">Sabo Nashr kitoblarini o'z do'koningizda sotmoqchimisiz? Kitoblarni tanlang,
          sonini belgilang va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz.</p>
       <div class="disc-note">🏷 Do'konlar uchun barcha kitoblarga avtomatik −5% chegirma</div>
+      <div class="min-note">📦 Eng kam xarid — 500 000 so'm</div>
       <div class="books" id="bookGrid"></div>
       <div style="margin-top:34px">
         <button class="btn btn-primary" onclick="openOrder()">Buyurtma berish →</button>
@@ -806,6 +817,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
           <div class="eyebrow">Ulgurji savdo</div>
           <h2>Do'kon, kutubxona va tadbirkorlar uchun</h2>
           <p>Saytdagi narxlar — ulgurji narxlar, barcha kitoblarga qo'shimcha −5% chegirma.
+             <b>Eng kam xarid — 500 000 so'm.</b>
              Katta hajmdagi buyurtma yoki savollar bo'yicha qo'ng'iroq qiling yoki Telegramda yozing.</p>
         </div>
         <div class="wsale-btns">
@@ -853,6 +865,8 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
       <div class="faq">
         <details class="q"><summary>Chegirma qanday hisoblanadi?</summary>
           <p>Do'konlar uchun barcha kitoblarga avtomatik 5% chegirma qilinadi. Chegirmali narx har bir kitob ostida va buyurtma summasida ko'rsatiladi.</p></details>
+        <details class="q"><summary>Eng kam buyurtma summasi qancha?</summary>
+          <p>Biz faqat ulgurji savdo qilamiz: eng kam xarid — 500 000 so'm (chegirma bilan hisoblangan summa). Bundan kam miqdor bo'yicha batafsil ma'lumot uchun Telegramda <a href="https://t.me/Kitobdor_ulgurji" target="_blank" rel="noopener">adminga yozing</a>.</p></details>
         <details class="q"><summary>Kitoblar qanday yetkaziladi?</summary>
           <p>Taksi, Yandex, BTS yoki EMU orqali — buyurtma berishda o'zingizga qulay usulni tanlaysiz.</p></details>
         <details class="q"><summary>Yetkazib berish qancha turadi?</summary>
@@ -940,7 +954,7 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
           <span class="bn-pill"><b id="bnN">17</b> ta kitob</span>
           <h2>Siz kitob do'konimisiz?</h2>
           <p>Sabo Nashr kitoblarini o'z do'koningizda soting: kitoblarni tanlang, sonini belgilang
-             va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz. <b>Barcha kitoblarga −5% chegirma.</b></p>
+             va ma'lumot qoldiring — biz aloqaga chiqib, sizga yetkazamiz. <b>Barcha kitoblarga −5% chegirma. Eng kam xarid — 500 000 so'm.</b></p>
         </div>
       </div>
       <input class="search" id="q" placeholder="Kitob nomi yoki mavzu bo'yicha qidirish...">
@@ -1008,6 +1022,12 @@ body::before, #order::before{content:""; position:fixed; inset:-20%; z-index:-1;
       <h2>Ma'lumotlarni tekshiring</h2>
       <p class="hint">Hammasi to'g'ri bo'lsa, pastdagi «Buyurtma berish» tugmasini bosing.</p>
       <div class="err" id="err"></div>
+      <div class="minbox" id="minBox">
+        ⚠ <b>Bu ulgurji do'kon — 500 000 so'mdan kam xarid qilish imkoni yo'q.</b><br>
+        Buyurtmangiz: <b id="minCur">0 so'm</b>. Yana <b id="minLeft">0 so'm</b>lik kitob qo'shing
+        yoki batafsil ma'lumot uchun adminga yozing.<br>
+        <a class="btn btn-primary" href="https://t.me/Kitobdor_ulgurji" target="_blank" rel="noopener">✈ Adminga yozish</a>
+      </div>
       <div class="rev">
         <h3>Buyurtma</h3>
         <div id="revBooks"></div>
@@ -1613,10 +1633,20 @@ function go(n){
   var ov = document.getElementById("order"); if(ov) ov.scrollTo({top:0,behavior:"smooth"});
   bar();
 }
+var MIN_ORDER = 500000, ADMIN_TG = "https://t.me/Kitobdor_ulgurji";
+function lowOrder(){ return total() < MIN_ORDER; }
 function bar(){
   var c = chosen(), n = c.reduce(function(s,x){return s+x.n},0);
-  var info = document.getElementById("barInfo");
-  info.innerHTML = n ? (n+" ta kitob · <b>"+money(total())+"</b>") : "Kitob tanlanmagan";
+  var info = document.getElementById("barInfo"), low = lowOrder();
+  info.innerHTML = (n ? (n+" ta kitob · <b>"+money(total())+"</b>") : "Kitob tanlanmagan") +
+    (low && step<5 ? '<span class="mn">Eng kam xarid: '+money(MIN_ORDER)+'</span>' : "");
+  var mb = document.getElementById("minBox");
+  if(mb){
+    mb.classList.toggle("on", step===4 && low);
+    document.getElementById("minCur").textContent = money(total());
+    document.getElementById("minLeft").textContent = money(Math.max(0, MIN_ORDER - total()));
+  }
+  if(step===4 && !sending) document.getElementById("next").textContent = low ? "✈ Adminga yozish" : "Buyurtma berish ✓";
   var ok = true;
   if(step===1) ok = n>0;
   if(step===3) ok = !!document.getElementById("nm").value.trim() &&
@@ -1679,12 +1709,13 @@ function next(){
   if(!bar()){ warn(); return; }
   if(step===1){ if(window.fbq) fbq("track","InitiateCheckout",{value:total(),currency:"UZS"}); go(3); return; }
   if(step<4){ go(FLOW[FLOW.indexOf(step)+1]); return; }
+  if(lowOrder()){ window.open(ADMIN_TG, "_blank", "noopener"); return; }
   submitOrder();
 }
 
 /* ---- yuborish ---- */
 function submitOrder(){
-  if(sent) return;
+  if(sent || lowOrder()) return;
   var btn = document.getElementById("next"), err = document.getElementById("err");
   sending = true; btn.disabled = true; btn.textContent = "Yuborilmoqda...";
   err.classList.remove("on");
